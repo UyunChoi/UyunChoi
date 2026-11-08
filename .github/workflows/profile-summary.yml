@@ -1,0 +1,22 @@
+name: GitHub-Profile-Summary-Cards
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 매일 UTC 자정(한국 시간 오전 9시) 1회 실행
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: generate-github-cards
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_GITHUB_TOKEN }}
+        with:
+          USERNAME: ${{ github.repository_owner }}
+          TIME_ZONE: "Asia/Seoul"
